@@ -36,11 +36,16 @@ function start() {
             discord_say(kinc_channel, from, msg);
         });
 
+        irc_client.addListener("message#showcase", function (from, msg) {
+            discord_say(showcase_channel, from, msg);
+        });
+
         const discord_client = new discord.Client();
 
         var beginners_channel;
         var kha_channel;
         var kinc_channel;
+        var showcase_channel;
 
         discord_client.on("ready", () => {
             discord_client.guilds.fetch("756857638041682015").then(guild => {
@@ -58,6 +63,8 @@ function start() {
                     irc_say("#kha", msg);
                 } else if (msg.channel.id === kinc_channel.id) {
                     irc_say("#kinc", msg);
+                } else if (msg.channel.id === showcase_channel.id) {
+                    irc_say("#showcase", msg);
                 }
             }
         });
