@@ -7,25 +7,34 @@ require('http').createServer(function (_, res) {
 
 function start() {
     try {
+        function irc_say(channel, msg) {
+            irc_client.say(channel, `<${msg.author.username}> ${msg.content}`);
+        }
+
+        function discord_say(channel, from, msg) {
+            if (from === "Kha-IRC-Bridge") {
+                const split = msg.split(">");
+                channel.send(`**<${split[0].substr(1)}>** ${msg.substr(split[0].length + 2)}`);
+            } else {
+                channel.send(`**<${from}>** ${msg}`);
+            }
+        }
+
         const irc_client = new irc.Client("irc.kode.tech", "KhaBridge", {
             channels: ["#beginners", "#kha", "#kinc"],
         });
 
-        irc_client.addListener("message#beginners", function (from, message) {
-            beginners_channel.send(`**<${from}>** ${message}`);
+        irc_client.addListener("message#beginners", function (from, msg) {
+            discord_say(beginners_channel, from, msg);
         });
 
-        irc_client.addListener("message#kha", function (from, message) {
-            kha_channel.send(`**<${from}>** ${message}`);
+        irc_client.addListener("message#kha", function (from, msg) {
+            discord_say(kha_channel, from, msg);
         });
 
-        irc_client.addListener("message#kinc", function (from, message) {
-            kinc_channel.send(`**<${from}>** ${message}`);
+        irc_client.addListener("message#kinc", function (from, msg) {
+            discord_say(kinc_channel, from, msg);
         });
-
-        function irc_say(channel, msg) {
-            irc_client.say(channel, `<${msg.author.username}> ${msg.content}`);
-        }
 
         const discord_client = new discord.Client();
 
