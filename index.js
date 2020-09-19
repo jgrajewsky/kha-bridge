@@ -8,7 +8,7 @@ require('http').createServer(function (_, res) {
 function start() {
     try {
         const irc_client = new irc.Client("irc.kode.tech", "KhaBridge", {
-            channels: ["#kha"],
+            channels: ["#kha", "#kinc"],
         });
 
         irc_client.addListener("message#kha", function (from, message) {
