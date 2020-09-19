@@ -20,7 +20,7 @@ function start() {
             }
         }
 
-        const irc_client = new irc.Client("irc.kode.tech", "KhaBridge", {
+        const irc_client = new irc.Client("irc.kode.tech", "kha-bridge", {
             channels: ["#beginners", "#kha", "#kinc"],
         });
 
