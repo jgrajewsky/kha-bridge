@@ -12,7 +12,7 @@ function start() {
         });
 
         irc_client.addListener("message#beginners", function (from, message) {
-            kinc_channel.send(`**<${from}>** ${message}`);
+            beginners_channel.send(`**<${from}>** ${message}`);
         });
 
         irc_client.addListener("message#kha", function (from, message) {
