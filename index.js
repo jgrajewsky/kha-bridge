@@ -7,7 +7,7 @@ require('http').createServer(function (_, res) {
 
 function start() {
     try {
-        const irc_client = new irc.Client("irc.kode.tech", "DiscordBridge", {
+        const irc_client = new irc.Client("irc.kode.tech", "KhaBridge", {
             channels: ["#kha"],
         });
 
@@ -15,8 +15,12 @@ function start() {
             kha_channel.send(`**<${from}>** ${message}`);
         });
 
-        function irc_say(msg) {
-            irc_client.say("#kha", `<${msg.author.username} on #${msg.channel.name}> ${msg.content}`);
+        irc_client.addListener("message#kinc", function (from, message) {
+            kinc_channel.send(`**<${from}>** ${message}`);
+        });
+
+        function irc_say(channel, msg) {
+            irc_client.say(channel, `<${msg.author.username} on #${msg.channel.name}> ${msg.content}`);
         }
 
         const discord_client = new discord.Client();
@@ -34,9 +38,9 @@ function start() {
         discord_client.on("message", msg => {
             if (msg.author.id !== "756864665518211203") {
                 if (msg.channel.id === "756857638775423070") {
-                    irc_say(msg);
+                    irc_say("#kha", msg);
                 } else if (msg.channel.id === "756860334790410380") {
-                    irc_say(msg);
+                    irc_say("#kinc", msg);
                 }
             }
         });
