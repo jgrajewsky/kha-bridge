@@ -31,15 +31,15 @@ function start() {
         discord_client.on("ready", () => {
             discord_client.guilds.fetch("756857638041682015").then(guild => {
                 kha_channel = guild.channels.cache.get("756857638775423070");
-                kinc_channel = guild.channels.cache.get("756857638775423070");
+                kinc_channel = guild.channels.cache.get("756860334790410380");
             });
         });
 
         discord_client.on("message", msg => {
             if (msg.author.id !== "756864665518211203") {
-                if (msg.channel.id === "756857638775423070") {
+                if (msg.channel.id === kha_channel.id) {
                     irc_say("#kha", msg);
-                } else if (msg.channel.id === "756860334790410380") {
+                } else if (msg.channel.id === kinc_channel.id) {
                     irc_say("#kinc", msg);
                 }
             }
