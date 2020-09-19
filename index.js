@@ -24,7 +24,7 @@ function start() {
         });
 
         function irc_say(channel, msg) {
-            irc_client.say(channel, `<${msg.author.username} on #${msg.channel.name}> ${msg.content}`);
+            irc_client.say(channel, `<${msg.author.username}> ${msg.content}`);
         }
 
         const discord_client = new discord.Client();
@@ -45,8 +45,7 @@ function start() {
             if (msg.author.id !== "756864665518211203") {
                 if (msg.channel.id === beginners_channel.id) {
                     irc_say("#beginners", msg);
-                }
-                else if (msg.channel.id === kha_channel.id) {
+                } else if (msg.channel.id === kha_channel.id) {
                     irc_say("#kha", msg);
                 } else if (msg.channel.id === kinc_channel.id) {
                     irc_say("#kinc", msg);
