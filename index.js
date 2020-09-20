@@ -30,6 +30,7 @@ function start() {
 
         irc_client.addListener("message#kha", function (from, msg) {
             discord_say(kha_channel, from, msg);
+            discord_say(haxe_channel, from, msg);
         });
 
         irc_client.addListener("message#kinc", function (from, msg) {
@@ -46,12 +47,18 @@ function start() {
         var kha_channel;
         var kinc_channel;
         var showcase_channel;
+        var haxe_channel;
 
         discord_client.on("ready", () => {
             discord_client.guilds.fetch("756857638041682015").then(guild => {
                 beginners_channel = guild.channels.cache.get("756859153791713280");
                 kha_channel = guild.channels.cache.get("756857638775423070");
                 kinc_channel = guild.channels.cache.get("756860334790410380");
+                showcase_channel = guild.channels.cache.get("756893887586500659");
+            });
+
+            discord_client.guilds.fetch("162395145352904705").then(guild => {
+                haxe_channel = guild.channels.cache.get("501447516852715525");
             });
         });
 
@@ -65,6 +72,8 @@ function start() {
                     irc_say("#kinc", msg);
                 } else if (msg.channel.id === showcase_channel.id) {
                     irc_say("#showcase", msg);
+                } else if (msg.channel.id === haxe_channel.id) {
+                    irc_say("#kha", msg);
                 }
             }
         });
