@@ -57,17 +57,17 @@ function start() {
             });
         });
 
-        function message_to_string(msg) {
-            let message = msg.content;
-            msg.attachments.each(attachment => {
-                message += `\n${attachment.url}`;
-            });
-            return message;
-        }
+        // function message_to_string(msg) {
+        //     let message = msg.content;
+        //     msg.attachments.each(attachment => {
+        //         message += `\n${attachment.url}`;
+        //     });
+        //     return message;
+        // }
 
         discord_client.on("message", msg => {
             if (msg.author.id !== "756864665518211203") {
-                const content = message_to_string(msg.content);
+                const content = msg.content;
                 if (msg.channel.id === beginners_channel.id) {
                     irc_say("#beginners", msg.author.username, content);
                 } else if (msg.channel.id === kha_channel.id) {
