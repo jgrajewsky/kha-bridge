@@ -7,17 +7,12 @@ require('http').createServer(function (_, res) {
 
 function start() {
     try {
-        function irc_say(channel, msg) {
-            irc_client.say(channel, `<${msg.author.username}> ${msg.content}`);
+        function irc_say(channel, from, msg) {
+            irc_client.say(channel, `<${from}> ${msg}`);
         }
 
         function discord_say(channel, from, msg) {
-            if (from === "Kha-IRC-Bridge") {
-                const split = msg.split(">");
-                channel.send(`**<${split[0].substr(1)}>** ${msg.substr(split[0].length + 2)}`);
-            } else {
-                channel.send(`**<${from}>** ${msg}`);
-            }
+            channel.send(`**<${from}>** ${msg}`);
         }
 
         const irc_client = new irc.Client("irc.kode.tech", "kha-bridge", {
@@ -65,15 +60,17 @@ function start() {
         discord_client.on("message", msg => {
             if (msg.author.id !== "756864665518211203") {
                 if (msg.channel.id === beginners_channel.id) {
-                    irc_say("#beginners", msg);
+                    irc_say("#beginners", msg.author.username, msg.content);
                 } else if (msg.channel.id === kha_channel.id) {
-                    irc_say("#kha", msg);
+                    irc_say("#kha", msg.author.username, msg.content);
+                    discord_say(haxe_channel, msg.author.username, msg.content);
                 } else if (msg.channel.id === kinc_channel.id) {
-                    irc_say("#kinc", msg);
+                    irc_say("#kinc", msg.author.username, msg.content);
                 } else if (msg.channel.id === showcase_channel.id) {
-                    irc_say("#showcase", msg);
+                    irc_say("#showcase", msg.author.username, msg.content);
                 } else if (msg.channel.id === haxe_channel.id) {
-                    irc_say("#kha", msg);
+                    irc_say("#kha", msg.author.username, msg.content);
+                    discord_say(kha_channel, msg.author.username, msg.content);
                 }
             }
         });
