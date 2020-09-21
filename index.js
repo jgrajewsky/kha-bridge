@@ -16,11 +16,7 @@ function start() {
         }
 
         const irc_client = new irc.Client("irc.kode.tech", "kha-bridge", {
-            channels: ["#beginners", "#kha", "#kinc"],
-        });
-
-        irc_client.addListener("message#beginners", function (from, msg) {
-            discord_say(beginners_channel, from, msg);
+            channels: ["#kha", "#kinc", "#krom"],
         });
 
         irc_client.addListener("message#kha", function (from, msg) {
@@ -32,24 +28,22 @@ function start() {
             discord_say(kinc_channel, from, msg);
         });
 
-        irc_client.addListener("message#showcase", function (from, msg) {
-            discord_say(showcase_channel, from, msg);
+        irc_client.addListener("message#krom", function (from, msg) {
+            discord_say(krom_channel, from, msg);
         });
 
         const discord_client = new discord.Client();
 
-        var beginners_channel;
         var kha_channel;
         var kinc_channel;
-        var showcase_channel;
+        var krom_channel;
         var haxe_channel;
 
         discord_client.on("ready", () => {
-            discord_client.guilds.fetch("756857638041682015").then(guild => {
-                beginners_channel = guild.channels.cache.get("756859153791713280");
-                kha_channel = guild.channels.cache.get("756857638775423070");
-                kinc_channel = guild.channels.cache.get("756860334790410380");
-                showcase_channel = guild.channels.cache.get("756893887586500659");
+            discord_client.guilds.fetch("757530409876717609").then(guild => {
+                kha_channel = guild.channels.cache.get("757530769315856425");
+                kinc_channel = guild.channels.cache.get("757530799292678174");
+                krom_channel = guild.channels.cache.get("757530822164348988");
             });
 
             discord_client.guilds.fetch("162395145352904705").then(guild => {
@@ -68,15 +62,13 @@ function start() {
         discord_client.on("message", msg => {
             if (msg.author.id !== "756864665518211203") {
                 const content = message_to_string(msg);
-                if (msg.channel.id === beginners_channel.id) {
-                    irc_say("#beginners", msg.author.username, content);
-                } else if (msg.channel.id === kha_channel.id) {
+                if (msg.channel.id === kha_channel.id) {
                     irc_say("#kha", msg.author.username, content);
                     discord_say(haxe_channel, msg.author.username, content);
                 } else if (msg.channel.id === kinc_channel.id) {
                     irc_say("#kinc", msg.author.username, content);
-                } else if (msg.channel.id === showcase_channel.id) {
-                    irc_say("#showcase", msg.author.username, content);
+                } else if (msg.channel.id === krom_channel.id) {
+                    irc_say("#krom", msg.author.username, content);
                 } else if (msg.channel.id === haxe_channel.id) {
                     irc_say("#kha", msg.author.username, content);
                     discord_say(kha_channel, msg.author.username, content);
