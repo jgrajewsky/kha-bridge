@@ -79,7 +79,7 @@ try {
                 const last_pm = haxe_people[msg.author.id];
                 const time = Date.now();
                 if (!last_pm || time - last_pm >= 86400000) {
-                    msg.author.send("Hello there traveler! Watch out, you're in the dangerous land of **Haxe**. But worry not. Follow me through the 🌉 to the mystical land of **Kode**!\nhttps://discord.gg/8XCzA6u");
+                    msg.author.send("Hello there traveler! Watch out, you're in the land of Haxe. That's all right but it's not the native habitat of the Kha people. If you are brave enough, follow me through the 🌉 to the mystical land of Kode!\nhttps://discord.gg/8XCzA6u");
                     haxe_people[msg.author.id] = time;
                 }
             }
