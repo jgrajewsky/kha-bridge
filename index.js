@@ -1,5 +1,6 @@
 const irc = require("irc");
 const discord = require("discord.js");
+const { stat } = require("fs");
 
 require('http').createServer(function (_, res) {
     res.end();
@@ -36,9 +37,11 @@ try {
     var kha_channel, kinc_channel, krom_channel, haxe_channel;
 
     discord_client.on("ready", () => {
-        try {
-            discord_client.user.setActivity("Kha take over the world", { type: "WATCHING" });
-        } catch (e) { }
+        var status = 0;
+        setInterval(function () {
+            discord_client.user.setActivity(`${["Kha", "Kinc", "Krom"][status++]} take over the world`, { type: "WATCHING" });
+            status = status % 3;
+        }, 10000);
 
         discord_client.guilds.fetch("757530409876717609").then(guild => {
             kha_channel = guild.channels.cache.get("757530769315856425");
