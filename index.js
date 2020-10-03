@@ -33,13 +33,13 @@ try {
 
     const discord_client = new discord.Client();
 
-    try {
-        discord_client.user.setActivity("Kha take over the world", { type: "WATCHING" });
-    } catch (e) { }
-
     var kha_channel, kinc_channel, krom_channel, haxe_channel;
 
     discord_client.on("ready", () => {
+        try {
+            discord_client.user.setActivity("Kha take over the world", { type: "WATCHING" });
+        } catch (e) { }
+
         discord_client.guilds.fetch("757530409876717609").then(guild => {
             kha_channel = guild.channels.cache.get("757530769315856425");
             kinc_channel = guild.channels.cache.get("757530799292678174");
