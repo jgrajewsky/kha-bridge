@@ -41,7 +41,7 @@ try {
         setInterval(function () {
             discord_client.user.setActivity(`${["Kha", "Kinc", "Krom"][status++]} take over the world`, { type: "WATCHING" });
             status = status % 3;
-        }, 10000);
+        }, 60000);
 
         discord_client.guilds.fetch("757530409876717609").then(guild => {
             kha_channel = guild.channels.cache.get("757530769315856425");
@@ -73,6 +73,8 @@ try {
             } else if (msg.channel.id === krom_channel.id) {
                 irc_say("#krom", msg.author.username, content);
             } else if (msg.channel.id === haxe_channel.id) {
+                // msg.author.id;
+
                 irc_say("#kha", msg.author.username, content);
                 discord_say(kha_channel, msg.author.username, content);
             }
