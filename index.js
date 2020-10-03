@@ -61,7 +61,7 @@ try {
         return message;
     }
 
-    var haxe_people = [];
+    var haxe_people = {};
     discord_client.on("message", msg => {
         if (msg.author.id !== "756864665518211203") {
             const content = message_to_string(msg);
@@ -76,9 +76,11 @@ try {
                 irc_say("#kha", msg.author.username, content);
                 discord_say(kha_channel, msg.author.username, content);
 
-                if (!haxe_people.includes(msg.author.id)) {
-                    msg.author.send("testing");
-                    haxe_people.push(msg.author.id);
+                const last_pm = haxe_people[msg.author.id];
+                const time = Date.now();
+                if (!last_pm || time - last_pm >= 86400000) {
+                    msg.author.send("Hello there traveler! Watch out, you're in the dangerous land of **Haxe**. But worry not. Follow me through the 🌉 to the mystical land of **Kode**!\nhttps://discord.gg/8XCzA6u");
+                    haxe_people[msg.author.id] = time;
                 }
             }
         }
