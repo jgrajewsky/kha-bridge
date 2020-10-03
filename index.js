@@ -1,6 +1,5 @@
 const irc = require("irc");
 const discord = require("discord.js");
-const { stat } = require("fs");
 
 require('http').createServer(function (_, res) {
     res.end();
@@ -62,6 +61,7 @@ try {
         return message;
     }
 
+    var haxe_people = [];
     discord_client.on("message", msg => {
         if (msg.author.id !== "756864665518211203") {
             const content = message_to_string(msg);
@@ -73,10 +73,13 @@ try {
             } else if (msg.channel.id === krom_channel.id) {
                 irc_say("#krom", msg.author.username, content);
             } else if (msg.channel.id === haxe_channel.id) {
-                // msg.author.id;
-
                 irc_say("#kha", msg.author.username, content);
                 discord_say(kha_channel, msg.author.username, content);
+
+                if (!haxe_people.includes(msg.author.id)) {
+                    msg.author.send("testing");
+                    haxe_people.push(msg.author.id);
+                }
             }
         }
     });
