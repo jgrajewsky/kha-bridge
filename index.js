@@ -33,7 +33,9 @@ try {
 
     const discord_client = new discord.Client();
 
-    discord_client.user.setActivity("Kha take over the world", { type: "WATCHING" });
+    try {
+        discord_client.user.setActivity("Kha take over the world", { type: "WATCHING" });
+    } catch (e) { }
 
     var kha_channel, kinc_channel, krom_channel, haxe_channel;
 
