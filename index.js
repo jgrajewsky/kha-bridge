@@ -15,7 +15,7 @@ try {
     }
 
     const irc_client = new irc.Client("irc.kode.tech", "kha-bridge", {
-        channels: ["#kha", "#kinc", "#krom"],
+        channels: ["#kha", "#kinc", "#krom", "#offtopic"],
     });
 
     irc_client.addListener("message#kha", function (from, msg) {
@@ -31,9 +31,13 @@ try {
         discord_say(krom_channel, from, msg);
     });
 
+    irc_client.addListener("message#offtopic", function (from, msg) {
+        discord_say(offtopic_channel, from, msg);
+    });
+
     const discord_client = new discord.Client();
 
-    var kha_channel, kinc_channel, krom_channel, haxe_channel;
+    var kha_channel, kinc_channel, krom_channel, offtopic_channel, haxe_channel;
 
     discord_client.on("ready", () => {
         var status = 0;
@@ -46,6 +50,7 @@ try {
             kha_channel = guild.channels.cache.get("757530769315856425");
             kinc_channel = guild.channels.cache.get("757530799292678174");
             krom_channel = guild.channels.cache.get("757530822164348988");
+            offtopic_channel = guild.channels.cache.get("763445658123763822");
         });
 
         discord_client.guilds.fetch("162395145352904705").then(guild => {
@@ -72,6 +77,8 @@ try {
                 irc_say("#kinc", msg.author.username, content);
             } else if (msg.channel.id === krom_channel.id) {
                 irc_say("#krom", msg.author.username, content);
+            } else if (msg.channel.id === offtopic_channel.id) {
+                irc_say("#offtopic", msg.author.username, content);
             } else if (msg.channel.id === haxe_channel.id) {
                 irc_say("#kha", msg.author.username, content);
                 discord_say(kha_channel, msg.author.username, content);
