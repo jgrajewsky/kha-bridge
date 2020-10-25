@@ -42,7 +42,7 @@ try {
     discord_client.on("ready", () => {
         var status = 0;
         setInterval(function () {
-            discord_client.user.setActivity(`${["Kha", "Kinc", "Krom"][status++]} take over the world`, { type: "WATCHING" });
+            discord_client.user.setActivity(`${["Kha", "Kinc", "Krom"][status++]} enlighten the world`, { type: "WATCHING" });
             status = status % 3;
         }, 60000);
 
