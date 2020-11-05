@@ -62,44 +62,22 @@ try {
         return message;
     }
 
-    fetch("https://discord.com/api/v8/users/342298285039419404/profile", {
-        "headers": {
-            "accept": "*/*",
-            "accept-language": "en-US,en;q=0.9",
-            "authorization": process.env.TOKEN,
-            "sec-fetch-dest": "empty",
-            "sec-fetch-mode": "cors",
-            "sec-fetch-site": "same-origin"
-        },
-        "referrerPolicy": "strict-origin-when-cross-origin",
-        "body": null,
-        "method": "GET",
-        "mode": "cors"
-    }).then(res => {
-        console.log(res);
-    });
-
     var haxe_people = {};
     discord_client.on("message", msg => {
         if (msg.author.id !== "756864665518211203") {
             const content = message_to_string(msg);
 
-            // fetch(`https://discord.com/api/v8/users/342298285039419404/profile`, {
-            //     headers: {
-            //         authorization: process.env.TOKEN
-            //     }
-            // })
-
-            // if (msg.content.substr(0, 12) === "!connections") {
-            //     fetch(`https://discord.com/api/v8/users/${msg.content.substr(13)}/profile`, {
-            //         headers: {
-            //             authorization: process.env.TOKEN
-            //         }
-            //     }).then(res => {
-            //         console.log(res);
-            //         //msg.channel.send(res.text());
-            //     });
-            // }
+            if (msg.content.substr(0, 12) === "!connections") {
+                fetch(`https://discord.com/api/v8/users/${msg.content.substr(13)}/profile`, {
+                    headers: {
+                        authorization: process.env.SPONSOR_TOKEN
+                    }
+                }).then(res => {
+                    res.text().then(body => {
+                        msg.channel.send(body);
+                    });
+                });
+            }
 
             if (msg.channel.id === kha_channel.id) {
                 irc_say("#kha", msg.author.username, content);
