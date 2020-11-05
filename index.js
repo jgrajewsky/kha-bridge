@@ -6,12 +6,6 @@ require('http').createServer(function (_, res) {
     res.end();
 }).listen(process.env.PORT);
 
-fetch("https://github.com/sponsors/RobDangerous").then(res => {
-    res.text().then(body => {
-        console.log(body);
-    });
-});
-
 try {
     function irc_say(channel, from, msg) {
         irc_client.say(channel, `<${from}> ${msg}`);
@@ -83,7 +77,7 @@ try {
                         const accounts = JSON.parse(body).connected_accounts;
                         for (let i = 0; i < accounts.length; i++) {
                             if (accounts[i].type === "github") {
-                                msg.channel.send("This guys github is https://github.com/" + accounts[i].name);
+                                msg.channel.send(`<@${msg.content.substr(12)}> ${sponsors.includes(accounts[i].name)? "is" : "is not"} Rob's Github Sponsor`);
                             }
                         }
                     });
@@ -112,6 +106,38 @@ try {
     });
 
     discord_client.login(process.env.TOKEN);
+
+    var sponsors = [];
+
+    fetch("https://github.com/sponsors/RobDangerous").then(res => {
+        res.text().then(body => {
+            const start = body.indexOf(`id="sponsors"`);
+            let tag_count = 0;
+            for (let i = start; i < body.length; ++i) {
+                if (body[i] === "<" && body.substr(i + 1, 3) !== "img") {
+                    if (body[i + 1] === "/") {
+                        if (--tag_count < 0) {
+                            break;
+                        }
+                    } else {
+                        ++tag_count;
+                    }
+                } else if (body.substr(i, 6) === `href="`) {
+                    i += 7;
+                    let user = "";
+                    for (let e = i; e < body.length; ++e) {
+                        if (body[e] === `"`) {
+                            i = e;
+                            break;
+                        } else {
+                            user += body[e];
+                        }
+                    }
+                    sponsors.push(user);
+                }
+            }
+        });
+    });
 
 } catch (e) {
     console.error(e);
