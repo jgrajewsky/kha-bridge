@@ -68,7 +68,7 @@ try {
             const content = message_to_string(msg);
 
             if (content.substr(0, 12) === "!connections") {
-                fetch(`https://discord.com/api/v8/users/${content.substr(9)}/profile`, {
+                fetch(`https://discord.com/api/v8/users/${content.substr(13)}/profile`, {
                     headers: {
                         authorization: process.env.TOKEN
                     }
