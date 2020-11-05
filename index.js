@@ -67,18 +67,24 @@ try {
         if (msg.author.id !== "756864665518211203") {
             const content = message_to_string(msg);
 
-            console.log(msg.content.substr(0, 12));
-            console.log(msg.content.substr(13));
-            
-            if (msg.content.substr(0, 12) === "!connections") {
-                fetch(`https://discord.com/api/v8/users/${msg.content.substr(13)}/profile`, {
-                    headers: {
-                        authorization: process.env.TOKEN
-                    }
-                }).then(res => {
-                    msg.channel.send(res.text());
-                });
-            }
+            fetch(`https://discord.com/api/v8/users/342298285039419404/profile`, {
+                headers: {
+                    authorization: process.env.TOKEN
+                }
+            }).then(res => {
+                console.log(res);
+            });
+
+            // if (msg.content.substr(0, 12) === "!connections") {
+            //     fetch(`https://discord.com/api/v8/users/${msg.content.substr(13)}/profile`, {
+            //         headers: {
+            //             authorization: process.env.TOKEN
+            //         }
+            //     }).then(res => {
+            //         console.log(res);
+            //         //msg.channel.send(res.text());
+            //     });
+            // }
 
             if (msg.channel.id === kha_channel.id) {
                 irc_say("#kha", msg.author.username, content);
