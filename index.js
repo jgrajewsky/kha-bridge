@@ -6,6 +6,12 @@ require('http').createServer(function (_, res) {
     res.end();
 }).listen(process.env.PORT);
 
+fetch("https://github.com/sponsors/RobDangerous").then(res => {
+    res.text().then(body => {
+        console.log(body);
+    });
+});
+
 try {
     function irc_say(channel, from, msg) {
         irc_client.say(channel, `<${from}> ${msg}`);
