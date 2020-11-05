@@ -67,14 +67,19 @@ try {
         if (msg.author.id !== "756864665518211203") {
             const content = message_to_string(msg);
 
-            if (msg.content.substr(0, 12) === "!connections") {
-                fetch(`https://discord.com/api/v8/users/${msg.content.substr(13)}/profile`, {
+            if (msg.content.substr(0, 11) === "!is_sponsor") {
+                fetch(`https://discord.com/api/v8/users/${msg.content.substr(12)}/profile`, {
                     headers: {
                         authorization: process.env.SPONSOR_TOKEN
                     }
                 }).then(res => {
                     res.text().then(body => {
-                        msg.channel.send(body);
+                        const accounts = JSON.parse(body).connected_accounts;
+                        for (let i = 0; i < accounts.length; i++) {
+                            if (accounts[i].type === "github") {
+                                msg.channel.send("This guys github is https://github.com/" + accounts[i].name);
+                            }
+                        }
                     });
                 });
             }
