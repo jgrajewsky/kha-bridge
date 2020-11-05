@@ -62,27 +62,27 @@ try {
         return message;
     }
 
+    fetch("https://discord.com/api/v8/users/342298285039419404/profile", {
+        "headers": {
+            "accept": "*/*",
+            "accept-language": "en-US,en;q=0.9",
+            "authorization": process.env.TOKEN,
+            "sec-fetch-dest": "empty",
+            "sec-fetch-mode": "cors",
+            "sec-fetch-site": "same-origin"
+        },
+        "referrerPolicy": "strict-origin-when-cross-origin",
+        "body": null,
+        "method": "GET",
+        "mode": "cors"
+    }).then(res => {
+        console.log(res);
+    });
+
     var haxe_people = {};
     discord_client.on("message", msg => {
         if (msg.author.id !== "756864665518211203") {
             const content = message_to_string(msg);
-
-            fetch("https://discord.com/api/v8/users/342298285039419404/profile", {
-                "headers": {
-                    "accept": "*/*",
-                    "accept-language": "en-US,en;q=0.9",
-                    "authorization": process.env.TOKEN,
-                    "sec-fetch-dest": "empty",
-                    "sec-fetch-mode": "cors",
-                    "sec-fetch-site": "same-origin"
-                },
-                "referrerPolicy": "strict-origin-when-cross-origin",
-                "body": null,
-                "method": "GET",
-                "mode": "cors"
-            }).then(res => {
-                console.log(res);
-            });
 
             // fetch(`https://discord.com/api/v8/users/342298285039419404/profile`, {
             //     headers: {
