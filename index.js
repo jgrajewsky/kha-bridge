@@ -1,5 +1,6 @@
 const irc = require("irc");
 const discord = require("discord.js");
+const fetch = require('node-fetch');
 
 require('http').createServer(function (_, res) {
     res.end();
@@ -33,7 +34,7 @@ try {
 
     const discord_client = new discord.Client();
 
-    var kha_channel, kinc_channel, krom_channel, offtopic_channel, haxe_channel;
+    var kha_channel, kinc_channel, krom_channel, haxe_channel;
 
     discord_client.on("ready", () => {
         var status = 0;
@@ -65,6 +66,17 @@ try {
     discord_client.on("message", msg => {
         if (msg.author.id !== "756864665518211203") {
             const content = message_to_string(msg);
+
+            if (content.substr(0, 12) === "!connections") {
+                fetch(`https://discord.com/api/v8/users/${content.substr(9)}/profile`, {
+                    headers: {
+                        authorization: process.env.TOKEN
+                    }
+                }).then(res => {
+                    msg.channel.send(res.text());
+                });
+            }
+
             if (msg.channel.id === kha_channel.id) {
                 irc_say("#kha", msg.author.username, content);
                 discord_say(haxe_channel, msg.author.username, content);

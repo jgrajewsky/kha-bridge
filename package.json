@@ -5,7 +5,8 @@
   "main": "index.js",
   "dependencies": {
     "discord.js": "^12.3.1",
-    "irc": "^0.5.2"
+    "irc": "^0.5.2",
+    "node-fetch": "^2.6.1"
   },
   "devDependencies": {},
   "scripts": {
