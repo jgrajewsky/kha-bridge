@@ -67,11 +67,11 @@ try {
         if (msg.author.id !== "756864665518211203") {
             const content = message_to_string(msg);
 
-            console.log(content.substr(0, 12));
-            console.log(content.substr(13));
+            console.log(msg.content.substr(0, 12));
+            console.log(msg.content.substr(13));
             
-            if (content.substr(0, 12) === "!connections") {
-                fetch(`https://discord.com/api/v8/users/${content.substr(13)}/profile`, {
+            if (msg.content.substr(0, 12) === "!connections") {
+                fetch(`https://discord.com/api/v8/users/${msg.content.substr(13)}/profile`, {
                     headers: {
                         authorization: process.env.TOKEN
                     }
